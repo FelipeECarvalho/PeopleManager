@@ -7,6 +7,8 @@ namespace PeopleManager.Controllers
     {
         public IActionResult Index(string name)
         {
+            ViewBag.Message = TempData["Message"];
+
             var personList = new List<Person>()
             {
                 new() { Name = "John Doe", Age = 14 },
@@ -34,6 +36,20 @@ namespace PeopleManager.Controllers
             };
 
             return View(personList);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Person person)
+        {
+            TempData["Message"] = "Person created successfully!" + string.Format("Name: {0}, Age: {1}", person.Name, person.Age);
+
+            return RedirectToAction("Index");
         }
     }
 }
