@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PeopleManager.Models;
 
 namespace PeopleManager.Controllers
 {
@@ -9,9 +10,17 @@ namespace PeopleManager.Controllers
             return View();
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details()
         {
-            return View(id);
+            var personList = new List<Person>()
+            {
+                new() { Name = "John Doe", Age = 14 },
+                new() { Name = "Marcus", Age = 15 },
+                new() { Name = "Felipe", Age = 20 },
+                new() { Name = "Test", Age = 23 }
+            };
+
+            return View(personList);
         }
     }
 }

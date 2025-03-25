@@ -1,9 +1,30 @@
-﻿@model int
+﻿@model List<PeopleManager.Models.Person>
 
 @{
     ViewData["Title"] = "People details";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Here will be shown people's details. Your ID: @Model</h1>
+    <h1 class="display-4">Here will be shown people's details</h1>
+    @{
+        var count = 0;
+
+        foreach (var person in Model)
+        {
+            <span><strong>ID:</strong>@count</span> <br />
+            <span><strong>Name:</strong>@person.Name</span> <br />
+            <span><strong>Age:</strong>@person.Age</span> <br />
+            if (count == 0)
+            {
+                <span><strong>First person</strong></span>
+            }
+            else if (count == Model.Count - 1)
+            {
+                <span><strong>Last person</strong></span>
+            }
+
+            <hr />
+            count++;
+        }
+    }
 </div>
