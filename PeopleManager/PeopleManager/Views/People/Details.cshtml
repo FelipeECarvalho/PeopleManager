@@ -5,7 +5,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Here will be shown people's details</h1>
+    <h1 class="display-4">@ViewBag.Text Here will be shown people's details. Date: @ViewBag.Date</h1>
     @{
         var count = 0;
 
@@ -14,6 +14,7 @@
             <span><strong>ID:</strong>@count</span> <br />
             <span><strong>Name:</strong>@person.Name</span> <br />
             <span><strong>Age:</strong>@person.Age</span> <br />
+            
             if (count == 0)
             {
                 <span><strong>First person</strong></span>
