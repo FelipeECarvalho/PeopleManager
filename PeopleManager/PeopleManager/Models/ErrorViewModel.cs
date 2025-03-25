@@ -1,4 +1,4 @@
-namespace GerenciamentoDePessoas.Models
+namespace PeopleManager.Models
 {
     public class ErrorViewModel
     {

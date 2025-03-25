@@ -1,4 +1,4 @@
-namespace GerenciamentoDePessoas
+namespace PeopleManager
 {
     public class Program
     {
