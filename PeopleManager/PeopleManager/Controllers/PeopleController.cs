@@ -47,6 +47,11 @@ namespace PeopleManager.Controllers
         [HttpPost]
         public IActionResult Create(Person person)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(person);
+            }
+
             TempData["Message"] = "Person created successfully!" + string.Format("Name: {0}, Age: {1}", person.Name, person.Age);
 
             return RedirectToAction("Index");
