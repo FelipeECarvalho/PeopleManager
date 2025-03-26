@@ -1,8 +1,8 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using PeopleManager.Models;
+using PeopleManager.Api.Models;
+using System.Diagnostics;
 
-namespace PeopleManager.Controllers
+namespace PeopleManager.Api.Controllers
 {
     public class HomeController : Controller
     {

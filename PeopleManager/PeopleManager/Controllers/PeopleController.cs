@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Model;
+using PeopleManager.Domain;
 
-namespace PeopleManager.Controllers
+namespace PeopleManager.Api.Controllers
 {
     public class PeopleController : Controller
     {
