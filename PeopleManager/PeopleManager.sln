@@ -13,6 +13,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleManager.Domain", "PeopleManager.Domain\PeopleManager.Domain.csproj", "{F5CA5286-C416-4CB7-AD68-29FE06EF41AC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleManager.Application", "PeopleManager.Application\PeopleManager.Application.csproj", "{BAA301EF-00EF-4EF0-B67C-8D1127657C06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{F5CA5286-C416-4CB7-AD68-29FE06EF41AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5CA5286-C416-4CB7-AD68-29FE06EF41AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5CA5286-C416-4CB7-AD68-29FE06EF41AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAA301EF-00EF-4EF0-B67C-8D1127657C06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAA301EF-00EF-4EF0-B67C-8D1127657C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAA301EF-00EF-4EF0-B67C-8D1127657C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAA301EF-00EF-4EF0-B67C-8D1127657C06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +44,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B3267934-B338-4A98-AFF9-0E3FFC26052C} = {613181DB-802E-4E16-893F-1EC20ECA94E7}
 		{F5CA5286-C416-4CB7-AD68-29FE06EF41AC} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{BAA301EF-00EF-4EF0-B67C-8D1127657C06} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B3514FB4-58E7-4818-9F62-D5F1D922EC61}

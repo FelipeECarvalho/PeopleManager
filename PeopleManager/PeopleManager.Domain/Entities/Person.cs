@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PeopleManager.Domain
+namespace PeopleManager.Domain.Entities
 {
     public class Person
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PeopleManager.Domain;
+using PeopleManager.Domain.Entities;
 
 namespace PeopleManager.Api.Controllers
 {

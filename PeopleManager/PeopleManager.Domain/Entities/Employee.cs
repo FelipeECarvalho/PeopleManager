@@ -1,4 +1,4 @@
-﻿namespace PeopleManager.Domain
+﻿namespace PeopleManager.Domain.Entities
 {
     public class Employee
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PeopleManager.Domain;
+using PeopleManager.Domain.Entities;
 
 namespace PeopleManager.Persistence
 {
