@@ -1,31 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PeopleManager.Application.Services;
 using PeopleManager.Domain.Entities;
-using PeopleManager.Persistence;
 
 namespace PeopleManager.Api.Controllers
 {
-    public class EmployeesController : Controller
+    public class EmployeesController(EmployeeService employeeService) : Controller
     {
-        private readonly PeopleManagerContext _context;
-
-        public EmployeesController(PeopleManagerContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Employee.ToListAsync());
-        }
+        public async Task<IActionResult> Index() 
+            => View(await employeeService.GetAllAsync());
 
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
                 return NotFound();
 
-            var employee = await _context.Employee
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var employee = await employeeService
+                .GetByIdAsync(id.Value);
 
             if (employee == null)
                 return NotFound();
@@ -44,8 +35,7 @@ namespace PeopleManager.Api.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(employee);
-                await _context.SaveChangesAsync();
+                await employeeService.SaveAsync(employee);
                 return RedirectToAction(nameof(Index));
             }
             return View(employee);
@@ -56,7 +46,8 @@ namespace PeopleManager.Api.Controllers
             if (id == null)
                 return NotFound();
 
-            var employee = await _context.Employee.FindAsync(id);
+            var employee = await employeeService
+                .GetByIdAsync(id.Value);
 
             if (employee == null)
                 return NotFound();
@@ -75,12 +66,11 @@ namespace PeopleManager.Api.Controllers
             {
                 try
                 {
-                    _context.Update(employee);
-                    await _context.SaveChangesAsync();
+                    await employeeService.UpdateAsync(employee);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmployeeExists(employee.Id))
+                    if (!await EmployeeExists(employee.Id))
                         return NotFound();
                     else
                         throw;
@@ -96,8 +86,8 @@ namespace PeopleManager.Api.Controllers
             if (id == null)
                 return NotFound();
 
-            var employee = await _context.Employee
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var employee = await employeeService
+                .GetByIdAsync(id.Value);
 
             if (employee == null)
                 return NotFound();
@@ -109,19 +99,18 @@ namespace PeopleManager.Api.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await _context.Employee.FindAsync(id);
+            var employee = await employeeService
+                .GetByIdAsync(id);
             
             if (employee != null)
-                _context.Employee.Remove(employee);
-
-            await _context.SaveChangesAsync();
+                await employeeService.DeleteAsync(employee);
 
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmployeeExists(int id)
+        private async Task<bool> EmployeeExists(int id)
         {
-            return _context.Employee.Any(e => e.Id == id);
+            return await employeeService.EmployeeExistsAsync(id);
         }
     }
 }

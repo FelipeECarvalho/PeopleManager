@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\PeopleManager.Persistence.csproj" />
+    <ProjectReference Include="..\PeopleManager.Application\PeopleManager.Application.csproj" />
     <ProjectReference Include="..\PeopleManager.Domain\PeopleManager.Domain.csproj" />
   </ItemGroup>
 </Project>
