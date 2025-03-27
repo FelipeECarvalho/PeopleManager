@@ -12,7 +12,6 @@ namespace PeopleManager.Domain.Interfaces
 
         Task<Employee> GetByIdAsync(int id);
         Task<IList<Employee>> GetAllAsync();
-
         Task<bool> EmployeeExistsAsync(int id);
     }
 }
