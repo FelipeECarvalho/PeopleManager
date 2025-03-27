@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using PeopleManager.Persistence;
+﻿using PeopleManager.Application.Services;
+using PeopleManager.Persistence.Extensions;
 
 namespace PeopleManager.Api
 {
@@ -9,8 +9,9 @@ namespace PeopleManager.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<PeopleManagerContext>(options =>
-                options.UseSqlServer(builder.Configuration.GetConnectionString("PeopleManagerContext") ?? throw new InvalidOperationException("Connection string 'PeopleManagerContext' not found.")));
+            builder.Services.AddPersistence(builder.Configuration.GetConnectionString("PeopleManagerContext"));
+            builder.Services.AddApplicationServices();
+            builder.Services.AddScoped<EmployeeService>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

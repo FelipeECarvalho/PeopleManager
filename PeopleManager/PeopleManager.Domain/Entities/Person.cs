@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using PeopleManager.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace PeopleManager.Domain.Entities
 {
@@ -12,6 +13,10 @@ namespace PeopleManager.Domain.Entities
 
         [CustomValidation(typeof(Person), "AgeValidate")]
         public int? Age { get; set; }
+
+        public string Document { get; set; }
+
+        public EBloodType BloodType { get; set; }
 
         public static ValidationResult AgeValidate(int? age)
         {
