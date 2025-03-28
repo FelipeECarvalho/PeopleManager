@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PeopleManager.Persistence;
 
@@ -10,9 +11,11 @@ using PeopleManager.Persistence;
 namespace PeopleManager.Persistence.Migrations
 {
     [DbContext(typeof(PeopleManagerContext))]
-    partial class PeopleManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20250328030958_Person_reference_required_Employee")]
+    partial class Person_reference_required_Employee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

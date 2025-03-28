@@ -58,6 +58,9 @@ namespace PeopleManager.Api.Controllers
                     Persons = await personService.GetAllAsync()
                 };
 
+                if (vm.Persons == null || vm.Persons.Count == 0)
+                    throw new Exception("Error! Register a person first, then try again.");
+
                 return View(vm);
             }
             catch (Exception ex)
@@ -73,18 +76,19 @@ namespace PeopleManager.Api.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    await employeeService.SaveAsync(vm.Employee);
-                    return RedirectToAction(nameof(Index));
-                }
+                if (!vm.PersonId.HasValue)
+                    throw new Exception("Employee is invalid.");
 
-                return View(vm);
+                vm.Employee.Person = await personService.GetByIdAsync(vm.PersonId.Value);
+                
+                await employeeService.SaveAsync(vm.Employee);
+                return RedirectToAction(nameof(Index));
+
             }
             catch (Exception ex)
             {
                 TempData["Error"] = ex.Message;
-                return View(vm);
+                return RedirectToAction(nameof(Create));
             }
         }
 

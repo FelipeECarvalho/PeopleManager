@@ -10,12 +10,16 @@ namespace PeopleManager.Persistence.Repositories
     {
         public async Task<IList<Employee>> GetAllAsync()
         {
-            return await _context.Employee.ToListAsync();
+            return await _context.Employee
+                .Include(x => x.Person)
+                .ToListAsync();
         }
 
         public async Task<Employee> GetByIdAsync(int id)
         {
-            return await _context.Employee.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Employee
+                .Include(x => x.Person)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task SaveAsync(Employee employee)

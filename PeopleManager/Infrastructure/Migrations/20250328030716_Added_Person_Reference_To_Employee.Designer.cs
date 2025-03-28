@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PeopleManager.Persistence;
 
@@ -10,9 +11,11 @@ using PeopleManager.Persistence;
 namespace PeopleManager.Persistence.Migrations
 {
     [DbContext(typeof(PeopleManagerContext))]
-    partial class PeopleManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20250328030716_Added_Person_Reference_To_Employee")]
+    partial class Added_Person_Reference_To_Employee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,7 +35,7 @@ namespace PeopleManager.Persistence.Migrations
                     b.Property<string>("Department")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PersonId")
+                    b.Property<int?>("PersonId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Salary")
@@ -78,9 +81,7 @@ namespace PeopleManager.Persistence.Migrations
                 {
                     b.HasOne("PeopleManager.Domain.Entities.Person", "Person")
                         .WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PersonId");
 
                     b.Navigation("Person");
                 });
