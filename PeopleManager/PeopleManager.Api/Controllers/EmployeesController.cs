@@ -84,7 +84,7 @@ namespace PeopleManager.Api.Controllers
             catch (Exception ex)
             {
                 TempData["Error"] = ex.Message;
-                return View();
+                return View(vm);
             }
         }
 
@@ -143,7 +143,7 @@ namespace PeopleManager.Api.Controllers
             catch (Exception ex)
             {
                 TempData["Error"] = ex.Message;
-                return View();
+                return View(vm);
             }
         }
 
@@ -188,7 +188,7 @@ namespace PeopleManager.Api.Controllers
             catch (Exception ex)
             {
                 TempData["Error"] = ex.Message;
-                return View();
+                return RedirectToAction(nameof(Delete));
             }
         }
 
