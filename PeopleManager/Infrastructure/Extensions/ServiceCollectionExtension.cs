@@ -20,6 +20,7 @@ namespace PeopleManager.Persistence.Extensions
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
             return services;
         }
     }

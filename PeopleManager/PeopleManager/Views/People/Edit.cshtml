@@ -1,5 +1,6 @@
 ﻿@using PeopleManager.Domain
 @using PeopleManager.Domain.Entities
+@using PeopleManager.Domain.Enums
 @model Person
 
 @{
@@ -32,7 +33,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="BloodType" class="control-label"></label>
-                <input asp-for="BloodType" class="form-control" />
+                <select asp-for="BloodType" class="form-control">
+                    @foreach (var bloodType in EBloodTypeUtils.GetAll())
+                    {
+                        <option value="@bloodType">@bloodType.ToString()</option>
+                    }
+                </select>
                 <span asp-validation-for="BloodType" class="text-danger"></span>
             </div>
             <div class="form-group">

@@ -13,6 +13,7 @@ namespace PeopleManager.Api
             builder.Services.AddInfrastructureServices();
 
             builder.Services.AddScoped<EmployeeService>();
+            builder.Services.AddScoped<PersonService>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

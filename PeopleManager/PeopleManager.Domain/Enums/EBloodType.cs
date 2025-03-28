@@ -1,4 +1,6 @@
-﻿namespace PeopleManager.Domain.Enums
+﻿using System.Collections.Generic;
+
+namespace PeopleManager.Domain.Enums
 {
     public enum EBloodType
     {
@@ -8,4 +10,10 @@
         AB = 3,
         O = 4
     }
+
+    public static class EBloodTypeUtils
+    {
+        public static IList<EBloodType> GetAll() 
+            => [EBloodType.None, EBloodType.A, EBloodType.B, EBloodType.AB, EBloodType.O];
+    } 
 }

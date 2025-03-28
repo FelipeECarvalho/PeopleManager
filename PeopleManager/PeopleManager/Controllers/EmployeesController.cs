@@ -110,7 +110,7 @@ namespace PeopleManager.Api.Controllers
 
         private async Task<bool> EmployeeExists(int id)
         {
-            return await employeeService.EmployeeExistsAsync(id);
+            return await employeeService.ExistsAsync(id);
         }
     }
 }

@@ -32,9 +32,9 @@ namespace PeopleManager.Application.Services
             await _employeeRepository.DeleteAsync(employee);
         }
 
-        public async Task<bool> EmployeeExistsAsync(int id)
+        public async Task<bool> ExistsAsync(int id)
         {
-            return await _employeeRepository.EmployeeExistsAsync(id);
+            return await _employeeRepository.ExistsAsync(id);
         }
     }
 }

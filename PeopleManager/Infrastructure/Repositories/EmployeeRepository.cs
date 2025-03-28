@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace PeopleManager.Persistence.Repositories
 {
-    public class EmployeeRepository(PeopleManagerContext context) : IEmployeeRepository
+    public class EmployeeRepository(PeopleManagerContext _context) : IEmployeeRepository
     {
-        private readonly PeopleManagerContext _context = context;
-
         public async Task<IList<Employee>> GetAllAsync()
         {
             return await _context.Employee.ToListAsync();
@@ -38,7 +36,7 @@ namespace PeopleManager.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> EmployeeExistsAsync(int id)
+        public async Task<bool> ExistsAsync(int id)
         {
             return await _context.Employee.AnyAsync(x => x.Id == id);
         }
