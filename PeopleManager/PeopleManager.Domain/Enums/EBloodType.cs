@@ -10,10 +10,4 @@ namespace PeopleManager.Domain.Enums
         AB = 3,
         O = 4
     }
-
-    public static class EBloodTypeUtils
-    {
-        public static IList<EBloodType> GetAll() 
-            => [EBloodType.None, EBloodType.A, EBloodType.B, EBloodType.AB, EBloodType.O];
-    } 
 }

@@ -1,6 +1,7 @@
-﻿@using PeopleManager.Domain
+﻿@using PeopleManager.Api.Models
+@using PeopleManager.Domain
 @using PeopleManager.Domain.Entities
-@model Employee
+@model EmployeeViewModel
 
 @{
     ViewData["Title"] = "Delete";
@@ -14,21 +15,21 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Department)
+            @Html.DisplayNameFor(model => model.Employee.Department)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Department)
+            @Html.DisplayFor(model => model.Employee.Department)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Salary)
+            @Html.DisplayNameFor(model => model.Employee.Salary)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Salary)
+            @Html.DisplayFor(model => model.Employee.Salary)
         </dd>
     </dl>
     
     <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Employee.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>

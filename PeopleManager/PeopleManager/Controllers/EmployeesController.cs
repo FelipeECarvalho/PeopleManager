@@ -1,111 +1,195 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PeopleManager.Api.Models;
 using PeopleManager.Application.Services;
-using PeopleManager.Domain.Entities;
 
 namespace PeopleManager.Api.Controllers
 {
-    public class EmployeesController(EmployeeService employeeService) : Controller
+    public class EmployeesController(EmployeeService employeeService, PersonService personService) : Controller
     {
-        public async Task<IActionResult> Index() 
-            => View(await employeeService.GetAllAsync());
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                var vm = new EmployeeViewModel
+                {
+                    Employees = await employeeService.GetAllAsync()
+                };
+
+                return View(vm);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View(new EmployeeViewModel());
+            }
+        }
 
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-                return NotFound();
+            try
+            {
+                if (id == null)
+                    return NotFound();
 
-            var employee = await employeeService
-                .GetByIdAsync(id.Value);
+                var vm = new EmployeeViewModel
+                {
+                    Employee = await employeeService.GetByIdAsync(id.Value)
+                };
 
-            if (employee == null)
-                return NotFound();
+                if (vm.Employee == null)
+                    return NotFound();
 
-            return View(employee);
+                return View(vm);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
+            }
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            try
+            {
+                var vm = new EmployeeViewModel
+                {
+                    Persons = await personService.GetAllAsync()
+                };
+
+                return View(vm);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Department,Salary")] Employee employee)
+        public async Task<IActionResult> Create(EmployeeViewModel vm)
         {
-            if (ModelState.IsValid)
+            try
             {
-                await employeeService.SaveAsync(employee);
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    await employeeService.SaveAsync(vm.Employee);
+                    return RedirectToAction(nameof(Index));
+                }
+
+                return View(vm);
             }
-            return View(employee);
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View();
+            }
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-                return NotFound();
+            try
+            {
+                if (id == null)
+                    return NotFound();
 
-            var employee = await employeeService
-                .GetByIdAsync(id.Value);
+                var vm = new EmployeeViewModel
+                {
+                    Employee = await employeeService.GetByIdAsync(id.Value),
+                };
 
-            if (employee == null)
-                return NotFound();
+                if (vm.Employee == null)
+                    return NotFound();
 
-            return View(employee);
+                return View(vm);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Department,Salary")] Employee employee)
+        public async Task<IActionResult> Edit(int id, EmployeeViewModel vm)
         {
-            if (id != employee.Id)
-                return NotFound();
-
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (id != vm.Employee.Id)
+                    return NotFound();
+
+                if (ModelState.IsValid)
                 {
-                    await employeeService.UpdateAsync(employee);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!await EmployeeExists(employee.Id))
-                        return NotFound();
-                    else
-                        throw;
+                    try
+                    {
+                        await employeeService.UpdateAsync(vm.Employee);
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!await EmployeeExists(vm.Employee.Id))
+                            return NotFound();
+                        else
+                            throw;
+                    }
+
+                    return RedirectToAction(nameof(Index));
                 }
 
-                return RedirectToAction(nameof(Index));
+                return View(vm);
             }
-            return View(employee);
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View();
+            }
         }
 
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-                return NotFound();
+            try
+            {
+                if (id == null)
+                    return NotFound();
 
-            var employee = await employeeService
-                .GetByIdAsync(id.Value);
+                var vm = new EmployeeViewModel
+                {
+                    Employee = await employeeService.GetByIdAsync(id.Value)
+                };
 
-            if (employee == null)
-                return NotFound();
+                if (vm.Employee == null)
+                    return NotFound();
 
-            return View(employee);
+                return View(vm.Employee);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var employee = await employeeService
-                .GetByIdAsync(id);
+            try
+            {
+                var employee = await employeeService
+                    .GetByIdAsync(id);
             
-            if (employee != null)
-                await employeeService.DeleteAsync(employee);
+                if (employee != null)
+                    await employeeService.DeleteAsync(employee);
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View();
+            }
         }
 
         private async Task<bool> EmployeeExists(int id)

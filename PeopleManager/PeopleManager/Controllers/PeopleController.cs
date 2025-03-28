@@ -9,20 +9,36 @@ namespace PeopleManager.Api.Controllers
     {
         public async Task<IActionResult> Index()
         {
-            return View(await _personService.GetAllAsync());
+            try
+            {
+                return View(await _personService.GetAllAsync());
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View();
+            }
         }
 
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-                return NotFound();
+            try
+            {
+                if (id == null)
+                    return NotFound();
 
-            var person = await _personService.GetByIdAsync(id.Value);
+                var person = await _personService.GetByIdAsync(id.Value);
 
-            if (person == null)
-                return NotFound();
+                if (person == null)
+                    return NotFound();
 
-            return View(person);
+                return View(person);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpGet]
@@ -34,76 +50,117 @@ namespace PeopleManager.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Person person)
         {
-            if (ModelState.IsValid)
+            try
             {
-                await _personService.SaveAsync(person);
-                return RedirectToAction(nameof(Index));
-            }
+                if (ModelState.IsValid)
+                {
+                    await _personService.SaveAsync(person);
+                    return RedirectToAction(nameof(Index));
+                }
 
-            return View(person);
+                return View(person);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View();
+            }
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-                return NotFound();
+            try
+            {
+                if (id == null)
+                    return NotFound();
 
-            var person = await _personService.GetByIdAsync(id.Value);
+                var person = await _personService.GetByIdAsync(id.Value);
 
-            if (person == null)
-                return NotFound();
+                if (person == null)
+                    return NotFound();
 
-            return View(person);
+                return View(person);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(int id, Person person)
         {
-            if (id != person.Id)
-                return NotFound();
-            
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    await _personService.UpdateAsync(person);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!await PersonExists(person.Id))
-                        return NotFound();
-                    else
-                        throw;
-                }
-
-                return RedirectToAction(nameof(Index));
-            }
+                if (id != person.Id)
+                    return NotFound();
             
-            return View(person);
+                if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        await _personService.UpdateAsync(person);
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!await PersonExists(person.Id))
+                            return NotFound();
+                        else
+                            throw;
+                    }
+
+                    return RedirectToAction(nameof(Index));
+                }
+            
+                return View(person);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return View();
+            }
         }
 
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-                return NotFound();
+            try
+            {
+                if (id == null)
+                    return NotFound();
 
-            var person = await _personService.GetByIdAsync(id.Value);
+                var person = await _personService.GetByIdAsync(id.Value);
 
-            if (person == null)
-                return NotFound();
+                if (person == null)
+                    return NotFound();
 
-            return View(person);
+                return View(person);
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
+            }
+
         }
 
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var person = await _personService.GetByIdAsync(id);
+            try 
+            {
+                var person = await _personService.GetByIdAsync(id);
 
-            if (person != null)
-                await _personService.DeleteAsync(person);
+                if (person != null)
+                    await _personService.DeleteAsync(person);
 
-            return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction();
+            }
         }
 
         private async Task<bool> PersonExists(int id)

@@ -9,7 +9,7 @@
 
 <h1>Edit</h1>
 
-<h4>Employee</h4>
+<h4>Person<</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Document" class="control-label"></label>
-                <input asp-for="Document" class="form-control" />
+                <input readonly="readonly" asp-for="Document" class="form-control" />
                 <span asp-validation-for="Document" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -34,7 +34,7 @@
             <div class="form-group">
                 <label asp-for="BloodType" class="control-label"></label>
                 <select asp-for="BloodType" class="form-control">
-                    @foreach (var bloodType in EBloodTypeUtils.GetAll())
+                    @foreach (var bloodType in Enum.GetValues(typeof(EBloodType)))
                     {
                         <option value="@bloodType">@bloodType.ToString()</option>
                     }
