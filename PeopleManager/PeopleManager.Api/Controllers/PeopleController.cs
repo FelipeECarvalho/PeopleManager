@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PeopleManager.Application.Services;
-using PeopleManager.Domain.Entities;
+using PeopleManager.Core.Entities;
+using System.Data.Entity.Infrastructure;
 
-namespace PeopleManager.Api.Controllers
+namespace PeopleManager.API.Controllers
 {
     public class PeopleController(PersonService _personService) : Controller
     {

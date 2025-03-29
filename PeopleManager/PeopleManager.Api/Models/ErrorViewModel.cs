@@ -1,4 +1,4 @@
-namespace PeopleManager.Api.Models
+namespace PeopleManager.API.Models
 {
     public class ErrorViewModel
     {

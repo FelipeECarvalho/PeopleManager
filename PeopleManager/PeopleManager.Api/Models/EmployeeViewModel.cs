@@ -1,6 +1,6 @@
-﻿using PeopleManager.Domain.Entities;
+﻿using PeopleManager.Core.Entities;
 
-namespace PeopleManager.Api.Models
+namespace PeopleManager.API.Models
 {
     public class EmployeeViewModel
     {

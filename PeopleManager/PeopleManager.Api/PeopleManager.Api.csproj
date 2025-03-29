@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.5.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -13,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure\PeopleManager.Persistence.csproj" />
     <ProjectReference Include="..\PeopleManager.Application\PeopleManager.Application.csproj" />
-    <ProjectReference Include="..\PeopleManager.Domain\PeopleManager.Domain.csproj" />
+    <ProjectReference Include="..\PeopleManager.Core\PeopleManager.Core.csproj" />
+    <ProjectReference Include="..\PeopleManager.Infrastructure\PeopleManager.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

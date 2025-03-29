@@ -1,7 +1,7 @@
 ﻿using PeopleManager.Application.Services;
-using PeopleManager.Persistence.Extensions;
+using PeopleManager.Infrastructure.Extensions;
 
-namespace PeopleManager.Api
+namespace PeopleManager.API
 {
     public class Program
     {
@@ -12,8 +12,8 @@ namespace PeopleManager.Api
             builder.Services.AddPersistence(builder.Configuration.GetConnectionString("PeopleManagerContext"));
             builder.Services.AddInfrastructureServices();
 
-            builder.Services.AddScoped<EmployeeService>();
-            builder.Services.AddScoped<PersonService>();
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddScoped<IPersonService, PersonService>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

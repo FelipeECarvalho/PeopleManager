@@ -1,10 +1,17 @@
-﻿using PeopleManager.Domain.Entities;
-using PeopleManager.Domain.Interfaces;
+﻿using PeopleManager.Core.Entities;
+using PeopleManager.Core.Interfaces;
 
 namespace PeopleManager.Application.Services
 {
-    public class PersonService(IPersonRepository _personRepository)
+    public class PersonService : IPersonService
     {
+        private readonly IPersonRepository _personRepository;
+
+        public PersonService(IPersonRepository personRepository)
+        {
+            _personRepository = personRepository;
+        }
+
         public async Task<IList<Person>> GetAllAsync()
         {
             return await _personRepository.GetAllAsync();
