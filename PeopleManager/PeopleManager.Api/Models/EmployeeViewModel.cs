@@ -1,4 +1,5 @@
 ﻿using PeopleManager.Core.Entities;
+using System.Collections.Generic;
 
 namespace PeopleManager.API.Models
 {

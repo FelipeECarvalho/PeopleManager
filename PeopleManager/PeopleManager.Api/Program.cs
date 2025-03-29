@@ -1,4 +1,8 @@
-﻿using PeopleManager.Application.Services;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using PeopleManager.Application.Services;
 using PeopleManager.Infrastructure.Extensions;
 
 namespace PeopleManager.API

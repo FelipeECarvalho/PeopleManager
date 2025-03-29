@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PeopleManager.API.Models;
 using PeopleManager.Application.Services;
+using System;
 using System.Data.Entity.Infrastructure;
+using System.Threading.Tasks;
 
 namespace PeopleManager.API.Controllers
 {

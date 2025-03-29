@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using PeopleManager.API.Models;
 using System.Diagnostics;
 
