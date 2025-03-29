@@ -59,7 +59,7 @@ namespace PeopleManager.Api.Controllers
                 };
 
                 if (vm.Persons == null || vm.Persons.Count == 0)
-                    throw new Exception("Error! Register a person first, then try again.");
+                    throw new Exception("Error! You have to register a person first.");
 
                 return View(vm);
             }
