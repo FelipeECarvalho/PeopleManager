@@ -10,4 +10,8 @@
     <ProjectReference Include="..\PeopleManager.Core\PeopleManager.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="InputModels\" />
+  </ItemGroup>
+
 </Project>

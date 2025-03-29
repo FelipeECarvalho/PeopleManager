@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PeopleManager.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using PeopleManager.Infrastructure.Persistence;
 namespace PeopleManager.Infrastructure.Migrations
 {
     [DbContext(typeof(PeopleManagerContext))]
-    partial class PeopleManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20250329183657_Employee_New_Property")]
+    partial class Employee_New_Property
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

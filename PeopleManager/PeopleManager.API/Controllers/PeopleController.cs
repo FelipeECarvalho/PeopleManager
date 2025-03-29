@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PeopleManager.API.Controllers
 {
-    public class PeopleController(PersonService _personService) : Controller
+    public class PeopleController(IPersonService _personService) : Controller
     {
         public async Task<IActionResult> Index()
         {
@@ -97,7 +97,7 @@ namespace PeopleManager.API.Controllers
             {
                 if (id != person.Id)
                     return NotFound();
-            
+
                 if (ModelState.IsValid)
                 {
                     try
@@ -114,7 +114,7 @@ namespace PeopleManager.API.Controllers
 
                     return RedirectToAction(nameof(Index));
                 }
-            
+
                 return View(person);
             }
             catch (Exception ex)
@@ -149,7 +149,7 @@ namespace PeopleManager.API.Controllers
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try 
+            try
             {
                 var person = await _personService.GetByIdAsync(id);
 

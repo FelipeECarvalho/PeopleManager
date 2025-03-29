@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PeopleManager.API.Controllers
 {
-    public class EmployeesController(EmployeeService employeeService, PersonService personService) : Controller
+    public class EmployeesController(IEmployeeService employeeService, IPersonService personService) : Controller
     {
         public async Task<IActionResult> Index()
         {
@@ -78,14 +78,13 @@ namespace PeopleManager.API.Controllers
         {
             try
             {
-                if (!vm.PersonId.HasValue)
-                    throw new Exception("Employee is invalid.");
+                if (ModelState.IsValid)
+                {
+                    await employeeService.SaveAsync(vm.Employee);
+                    return RedirectToAction(nameof(Index));
+                }
 
-                vm.Employee.Person = await personService.GetByIdAsync(vm.PersonId.Value);
-                
-                await employeeService.SaveAsync(vm.Employee);
-                return RedirectToAction(nameof(Index));
-
+                return RedirectToAction(nameof(Create));
             }
             catch (Exception ex)
             {
@@ -185,7 +184,7 @@ namespace PeopleManager.API.Controllers
             {
                 var employee = await employeeService
                     .GetByIdAsync(id);
-            
+
                 if (employee != null)
                     await employeeService.DeleteAsync(employee);
 

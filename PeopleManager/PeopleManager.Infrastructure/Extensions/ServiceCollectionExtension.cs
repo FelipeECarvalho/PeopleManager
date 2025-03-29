@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PeopleManager.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using PeopleManager.Core.Interfaces;
 using PeopleManager.Infrastructure.Persistence;
 using PeopleManager.Infrastructure.Persistence.Repositories;
 
