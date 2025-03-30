@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using PeopleManager.API.Models;
+using PeopleManager.Application.ViewModels;
 using System.Diagnostics;
 
 namespace PeopleManager.API.Controllers

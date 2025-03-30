@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PeopleManager.API.Models;
 using PeopleManager.Application.Services;
-using System;
+using PeopleManager.Application.ViewModels;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
+using System;
+using PeopleManager.Application.InputModels;
+using PeopleManager.Core.Entities;
 
 namespace PeopleManager.API.Controllers
 {
@@ -11,20 +13,19 @@ namespace PeopleManager.API.Controllers
     {
         public async Task<IActionResult> Index()
         {
+            var vm = new EmployeeViewModel();
+
             try
             {
-                var vm = new EmployeeViewModel
-                {
-                    Employees = await employeeService.GetAllAsync()
-                };
-
+                vm.Employees = await employeeService.GetAllAsync();
                 return View(vm);
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
-                return View(new EmployeeViewModel());
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
+
+            return View(vm);
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -46,9 +47,10 @@ namespace PeopleManager.API.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Create()
@@ -67,30 +69,32 @@ namespace PeopleManager.API.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EmployeeViewModel vm)
+        public async Task<IActionResult> Create(EmployeeInputModel inputModel)
         {
+            if (!ModelState.IsValid)
+                return View(inputModel);
+
             try
             {
-                if (ModelState.IsValid)
-                {
-                    await employeeService.SaveAsync(vm.Employee);
-                    return RedirectToAction(nameof(Index));
-                }
+                var employee = new Employee(inputModel.Department, inputModel.Salary, inputModel.PersonId);
 
-                return RedirectToAction(nameof(Create));
+                await employeeService.SaveAsync(employee);
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
-                return RedirectToAction(nameof(Create));
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
+
+            return View(inputModel);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -112,9 +116,10 @@ namespace PeopleManager.API.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
