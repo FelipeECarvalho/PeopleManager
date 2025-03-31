@@ -29,6 +29,7 @@ namespace PeopleManager.Infrastructure.Persistence.Repositories
 
         public async Task UpdateAsync(Employee employee)
         {
+            employee.Person = null;
             _context.Employee.Update(employee);
             await _context.SaveChangesAsync();
         }

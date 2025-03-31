@@ -4,8 +4,6 @@ using PeopleManager.Application.ViewModels;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 using System;
-using PeopleManager.Application.InputModels;
-using PeopleManager.Core.Entities;
 
 namespace PeopleManager.API.Controllers
 {
@@ -77,16 +75,11 @@ namespace PeopleManager.API.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(EmployeeInputModel inputModel)
+        public async Task<IActionResult> Create(EmployeeViewModel vm)
         {
-            if (!ModelState.IsValid)
-                return View(inputModel);
-
             try
             {
-                var employee = new Employee(inputModel.Department, inputModel.Salary, inputModel.PersonId);
-
-                await employeeService.SaveAsync(employee);
+                await employeeService.SaveAsync(vm.Employee);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -94,7 +87,7 @@ namespace PeopleManager.API.Controllers
                 ModelState.AddModelError(string.Empty, ex.Message);
             }
 
-            return View(inputModel);
+            return View(vm);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -124,37 +117,26 @@ namespace PeopleManager.API.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, EmployeeViewModel vm)
+        public async Task<IActionResult> Edit(EmployeeViewModel vm)
         {
             try
             {
-                if (id != vm.Employee.Id)
+                await employeeService.UpdateAsync(vm.Employee);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!await EmployeeExists(vm.Employee.Id))
                     return NotFound();
 
-                if (ModelState.IsValid)
-                {
-                    try
-                    {
-                        await employeeService.UpdateAsync(vm.Employee);
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        if (!await EmployeeExists(vm.Employee.Id))
-                            return NotFound();
-                        else
-                            throw;
-                    }
-
-                    return RedirectToAction(nameof(Index));
-                }
-
-                return View(vm);
+                throw;
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
-                return View(vm);
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
+
+            return View(vm);
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -176,9 +158,10 @@ namespace PeopleManager.API.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
+
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost, ActionName("Delete")]
@@ -197,9 +180,10 @@ namespace PeopleManager.API.Controllers
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
-                return RedirectToAction(nameof(Delete));
+                ModelState.AddModelError(string.Empty, ex.Message);
             }
+
+            return RedirectToAction(nameof(Delete));
         }
 
         private async Task<bool> EmployeeExists(int id)

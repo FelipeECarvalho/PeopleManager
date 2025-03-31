@@ -1,16 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PeopleManager.Core.Entities
 {
     public class Employee : BaseEntity
     {
-        public Employee(string department, decimal salary, int personId)
-        {
-            Department = department;
-            Salary = salary;
-            PersonId = personId;
-        }
-
         [Required]
         public string Department { get; set; }
 
@@ -20,6 +14,8 @@ namespace PeopleManager.Core.Entities
         [Required]
         public int PersonId { get; set; }
 
+
+        [ForeignKey("PersonId")]
         public Person Person { get; set; }
     }
 }

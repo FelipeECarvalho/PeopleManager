@@ -24,11 +24,18 @@ namespace PeopleManager.Application.Services
 
         public async Task SaveAsync(Employee employee)
         {
+            Validate(employee);
+
             await _employeeRepository.SaveAsync(employee);
         }
 
         public async Task UpdateAsync(Employee employee)
         {
+            Validate(employee);
+
+            if (!await ExistsAsync(employee.Id))
+                throw new InvalidOperationException("Employee not found");
+
             await _employeeRepository.UpdateAsync(employee);
         }
 
@@ -40,6 +47,20 @@ namespace PeopleManager.Application.Services
         public async Task<bool> ExistsAsync(int id)
         {
             return await _employeeRepository.ExistsAsync(id);
+        }
+
+        private static void Validate(Employee employee)
+        {
+            ArgumentNullException.ThrowIfNull(employee);
+
+            if (string.IsNullOrEmpty(employee.Department))
+                throw new InvalidOperationException("Department is required");
+
+            if (employee.Salary <= 0)
+                throw new InvalidOperationException("Salary is required");
+
+            if (employee.PersonId == 0)
+                throw new InvalidOperationException("Person is required");
         }
     }
 }
