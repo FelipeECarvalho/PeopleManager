@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PeopleManager.Application.Services;
-using PeopleManager.Infrastructure.Extensions;
+using PeopleManager.Core.Interfaces;
+using PeopleManager.Infrastructure;
+using PeopleManager.Infrastructure.Identity;
+using PeopleManager.Infrastructure.Persistence.Repositories;
 
 namespace PeopleManager.Web
 {
@@ -13,11 +16,16 @@ namespace PeopleManager.Web
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddPersistence(builder.Configuration.GetConnectionString("PeopleManagerContext"));
-            builder.Services.AddInfrastructureServices();
+            Dependencies.ConfigureServices(builder.Configuration, builder.Services);
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<AppIdentityDbContext>()
+                .AddDefaultTokenProviders();
 
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<IPersonService, PersonService>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

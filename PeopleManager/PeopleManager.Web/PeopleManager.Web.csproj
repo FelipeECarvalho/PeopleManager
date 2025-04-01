@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.14" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\PeopleManager.Application\PeopleManager.Application.csproj" />
     <ProjectReference Include="..\PeopleManager.Core\PeopleManager.Core.csproj" />
     <ProjectReference Include="..\PeopleManager.Infrastructure\PeopleManager.Infrastructure.csproj" />
