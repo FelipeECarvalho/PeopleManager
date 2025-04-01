@@ -12,15 +12,13 @@
             data: { name: name },
             contentType: "application/json",
             success: function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    var employee = data[i];
-
+                data.forEach(function (employee) {
                     var li = $("<li />", {
                         text: employee.person.name + " -- " + employee.department + " -- " + employee.salary,
                     });
 
                     $("#employee-list").append(li)
-                }
+                });
             }
         });
     });

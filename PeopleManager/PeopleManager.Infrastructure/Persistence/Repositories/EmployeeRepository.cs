@@ -18,7 +18,7 @@ namespace PeopleManager.Infrastructure.Persistence.Repositories
         {
             return await _context.Employee
                 .Include(x => x.Person)
-                .Where(x => x.Person.Name.Contains(name))
+                .Where(x => EF.Functions.Like(x.Person.Name, $"%{name}%"))
                 .AsNoTracking()
                 .ToListAsync();
         }
