@@ -31,6 +31,9 @@ namespace PeopleManager.Application.Services
         {
             Validate(employee);
 
+            employee.UpdateDate = DateTime.Now;
+            employee.CreateDate = DateTime.Now;
+
             await _employeeRepository.SaveAsync(employee);
         }
 
@@ -41,12 +44,17 @@ namespace PeopleManager.Application.Services
             if (!await ExistsAsync(employee.Id))
                 throw new InvalidOperationException("Employee not found");
 
+            employee.UpdateDate = DateTime.Now;
+
             await _employeeRepository.UpdateAsync(employee);
         }
 
         public async Task DeleteAsync(Employee employee)
         {
-            await _employeeRepository.DeleteAsync(employee);
+            employee.UpdateDate = DateTime.Now;
+            employee.IsDeleted = true;
+
+            await _employeeRepository.UpdateAsync(employee);
         }
 
         public async Task<bool> ExistsAsync(int id)

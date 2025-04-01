@@ -9,6 +9,7 @@ namespace PeopleManager.Infrastructure.Persistence.Repositories
         public async Task<IList<Person>> GetAllAsync()
         {
             return await _context.Person
+                .Where(x => !x.IsDeleted)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -16,6 +17,7 @@ namespace PeopleManager.Infrastructure.Persistence.Repositories
         public async Task<Person> GetByIdAsync(int id)
         {
             return await _context.Person
+                .Where(x => !x.IsDeleted)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
@@ -31,15 +33,10 @@ namespace PeopleManager.Infrastructure.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Person person)
-        {
-            _context.Person.Remove(person);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<bool> ExistsAsync(int id)
         {
             return await _context.Person
+                .Where(x => !x.IsDeleted)
                 .AsNoTracking()
                 .AnyAsync(e => e.Id == id);
         }

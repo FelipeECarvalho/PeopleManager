@@ -4,6 +4,7 @@ using PeopleManager.Application.ViewModels;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 using System;
+using System.Linq;
 
 namespace PeopleManager.API.Controllers
 {
@@ -154,7 +155,7 @@ namespace PeopleManager.API.Controllers
                 if (vm.Employee == null)
                     return NotFound();
 
-                return View(vm.Employee);
+                return View(vm);
             }
             catch (Exception ex)
             {
@@ -186,10 +187,14 @@ namespace PeopleManager.API.Controllers
             return RedirectToAction(nameof(Delete));
         }
 
-        public async Task<IActionResult> GetByName()
+        public async Task<JsonResult> GetByName()
         {
             var employeesList = await employeeService.GetByNameAsync(Request.Query["name"]);
-            return Json(employeesList);
+
+            var data = employeesList?
+                .Select(x => $"{x.Id} - {x.Person.Name} - {x.Department} - {x.Salary}");
+
+            return Json(data);
         }
 
         private async Task<bool> EmployeeExists(int id)

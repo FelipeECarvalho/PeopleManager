@@ -12,12 +12,8 @@
             data: { name: name },
             contentType: "application/json",
             success: function (data) {
-                data.forEach(function (employee) {
-                    var li = $("<li />", {
-                        text: employee.person.name + " -- " + employee.department + " -- " + employee.salary,
-                    });
-
-                    $("#employee-list").append(li)
+                data.forEach(function (name) {
+                    $("#employee-list").append($("<li />", { text: name }))
                 });
             }
         });

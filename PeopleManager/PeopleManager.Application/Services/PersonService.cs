@@ -24,22 +24,51 @@ namespace PeopleManager.Application.Services
 
         public async Task SaveAsync(Person person)
         {
+            Validate(person);
+
+            person.UpdateDate = DateTime.Now;
+            person.CreateDate = DateTime.Now;
+
             await _personRepository.SaveAsync(person);
         }
 
         public async Task UpdateAsync(Person person)
         {
+            Validate(person);
+
+            if (!await ExistsAsync(person.Id))
+                throw new InvalidOperationException("Person not found");
+
+            person.UpdateDate = DateTime.Now;
+
             await _personRepository.UpdateAsync(person);
         }
 
         public async Task DeleteAsync(Person person)
         {
-            await _personRepository.DeleteAsync(person);
+            person.UpdateDate = DateTime.Now;
+            person.IsDeleted = true;
+
+            await _personRepository.UpdateAsync(person);
         }
 
         public async Task<bool> ExistsAsync(int id)
         {
             return await _personRepository.ExistsAsync(id);
+        }
+
+        private static void Validate(Person person)
+        {
+            ArgumentNullException.ThrowIfNull(person);
+
+            if (string.IsNullOrEmpty(person.Document))
+                throw new InvalidOperationException("Document is required");
+
+            if (string.IsNullOrEmpty(person.Name))
+                throw new InvalidOperationException("Name is required");
+
+            if (person.Age == 0)
+                throw new InvalidOperationException("Age is required");
         }
     }
 }

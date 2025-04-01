@@ -5,7 +5,6 @@ namespace PeopleManager.Core.Interfaces
     public interface IEmployeeRepository
     {
         Task SaveAsync(Employee employee);
-        Task DeleteAsync(Employee employee);
         Task UpdateAsync(Employee employee);
 
         Task<Employee> GetByIdAsync(int id);

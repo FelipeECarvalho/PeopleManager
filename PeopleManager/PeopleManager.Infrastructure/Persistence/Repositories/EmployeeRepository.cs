@@ -10,6 +10,7 @@ namespace PeopleManager.Infrastructure.Persistence.Repositories
         {
             return await _context.Employee
                 .Include(x => x.Person)
+                .Where(x => !x.IsDeleted && !x.Person.IsDeleted)
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -18,6 +19,7 @@ namespace PeopleManager.Infrastructure.Persistence.Repositories
         {
             return await _context.Employee
                 .Include(x => x.Person)
+                .Where(x => !x.IsDeleted && !x.Person.IsDeleted)
                 .Where(x => EF.Functions.Like(x.Person.Name, $"%{name}%"))
                 .AsNoTracking()
                 .ToListAsync();
@@ -27,6 +29,7 @@ namespace PeopleManager.Infrastructure.Persistence.Repositories
         {
             return await _context.Employee
                 .Include(x => x.Person)
+                .Where(x => !x.IsDeleted && !x.Person.IsDeleted)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
@@ -43,15 +46,10 @@ namespace PeopleManager.Infrastructure.Persistence.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Employee employee)
-        {
-            _context.Employee.Remove(employee);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<bool> ExistsAsync(int id)
         {
             return await _context.Employee
+                .Where(x => !x.IsDeleted && !x.Person.IsDeleted)
                 .AsNoTracking()
                 .AnyAsync(x => x.Id == id);
         }
