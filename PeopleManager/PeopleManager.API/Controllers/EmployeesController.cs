@@ -186,6 +186,12 @@ namespace PeopleManager.API.Controllers
             return RedirectToAction(nameof(Delete));
         }
 
+        public async Task<IActionResult> GetByName()
+        {
+            var employeesList = await employeeService.GetByNameAsync(Request.Query["name"]);
+            return Json(employeesList);
+        }
+
         private async Task<bool> EmployeeExists(int id)
         {
             return await employeeService.ExistsAsync(id);

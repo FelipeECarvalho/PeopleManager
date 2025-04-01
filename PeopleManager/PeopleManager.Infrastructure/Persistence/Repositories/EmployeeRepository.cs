@@ -14,6 +14,15 @@ namespace PeopleManager.Infrastructure.Persistence.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IList<Employee>> GetByNameAsync(string name)
+        {
+            return await _context.Employee
+                .Include(x => x.Person)
+                .Where(x => x.Person.Name.Contains(name))
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
         public async Task<Employee> GetByIdAsync(int id)
         {
             return await _context.Employee

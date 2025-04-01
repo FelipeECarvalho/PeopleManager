@@ -17,6 +17,11 @@ namespace PeopleManager.Application.Services
             return await _employeeRepository.GetAllAsync();
         }
 
+        public async Task<IList<Employee>> GetByNameAsync(string name)
+        {
+            return await _employeeRepository.GetByNameAsync(name);
+        }
+
         public async Task<Employee> GetByIdAsync(int id)
         {
             return await _employeeRepository.GetByIdAsync(id);

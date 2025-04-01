@@ -13,6 +13,13 @@
     <a asp-action="Create">Create New</a>
 </p>
 
+<h3>Search for Employee</h3>
+<div class="input-group mb-3">
+    <input type="text" class="form-control" id="employee-search" placeholder="Search" aria-label="Search" aria-describedby="search-button">
+</div>
+
+<ul id="employee-list" class="list-group mt-3"> </ul>
+
 @if (Model.Employees != null && Model.Employees.Count > 0)
 {
     <table class="table">
@@ -53,3 +60,4 @@
         </tbody>
     </table>
 }
+

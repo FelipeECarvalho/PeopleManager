@@ -6,6 +6,8 @@ namespace PeopleManager.Application.Services
     {
         Task<IList<Employee>> GetAllAsync();
 
+        Task<IList<Employee>> GetByNameAsync(string name);
+
         Task<Employee> GetByIdAsync(int id);
 
         Task SaveAsync(Employee employee);

@@ -14,7 +14,6 @@ namespace PeopleManager.Core.Entities
         [Required]
         public int PersonId { get; set; }
 
-
         [ForeignKey("PersonId")]
         public Person Person { get; set; }
     }

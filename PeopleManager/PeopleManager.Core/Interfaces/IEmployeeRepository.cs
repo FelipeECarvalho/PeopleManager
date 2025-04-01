@@ -10,6 +10,7 @@ namespace PeopleManager.Core.Interfaces
 
         Task<Employee> GetByIdAsync(int id);
         Task<IList<Employee>> GetAllAsync();
+        Task<IList<Employee>> GetByNameAsync(string name);
         Task<bool> ExistsAsync(int id);
     }
 }
