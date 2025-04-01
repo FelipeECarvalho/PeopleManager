@@ -1,8 +1,18 @@
-﻿@{
+﻿@model IList<string>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>PeopleManager is an application that allows you to easily manage people and employees!</p>
+
+    <div class="container col-md-12">
+        <h5>Death Stranding is one of my favorite games. Take a look at some of the screenshots I took while playing it.</h5>
+        @foreach (var fileName in Model)
+        {
+            <img class="col-md-12" width="500" height="500" src="@Url.Content($"~/images/{fileName}")" alt="Image" />
+        }
+    </div>
 </div>
