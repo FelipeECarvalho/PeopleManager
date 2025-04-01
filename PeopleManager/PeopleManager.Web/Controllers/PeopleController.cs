@@ -2,10 +2,9 @@
 using PeopleManager.Application.Services;
 using PeopleManager.Core.Entities;
 using System;
-using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 
-namespace PeopleManager.API.Controllers
+namespace PeopleManager.Web.Controllers
 {
     public class PeopleController(IPersonService _personService) : Controller
     {
@@ -98,24 +97,11 @@ namespace PeopleManager.API.Controllers
                 if (id != person.Id)
                     return NotFound();
 
-                if (ModelState.IsValid)
-                {
-                    try
-                    {
-                        await _personService.UpdateAsync(person);
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        if (!await PersonExists(person.Id))
-                            return NotFound();
-                        else
-                            throw;
-                    }
+                if (!ModelState.IsValid)
+                    return View(person);
 
-                    return RedirectToAction(nameof(Index));
-                }
-
-                return View(person);
+                await _personService.UpdateAsync(person);
+                return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {

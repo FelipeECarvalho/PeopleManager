@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleManager.API", "PeopleManager.Api\PeopleManager.API.csproj", "{7C4F0791-C4EF-4325-B303-DA4B6C552243}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleManager.Web", "PeopleManager.Web\PeopleManager.Web.csproj", "{7C4F0791-C4EF-4325-B303-DA4B6C552243}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleManager.Core", "PeopleManager.Core\PeopleManager.Core.csproj", "{84083833-4901-46DD-967A-CAE10F36FFF0}"
 EndProject

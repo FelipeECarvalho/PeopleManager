@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace PeopleManager.API.Controllers
+namespace PeopleManager.Web.Controllers
 {
     public class HomeController : Controller
     {

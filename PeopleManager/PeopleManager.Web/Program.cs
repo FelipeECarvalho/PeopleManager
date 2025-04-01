@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 using PeopleManager.Application.Services;
 using PeopleManager.Infrastructure.Extensions;
 
-namespace PeopleManager.API
+namespace PeopleManager.Web
 {
     public class Program
     {

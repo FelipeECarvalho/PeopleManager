@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PeopleManager.Application.Services;
 using PeopleManager.Application.ViewModels;
-using System.Data.Entity.Infrastructure;
-using System.Threading.Tasks;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
-namespace PeopleManager.API.Controllers
+namespace PeopleManager.Web.Controllers
 {
     public class EmployeesController(IEmployeeService employeeService, IPersonService personService) : Controller
     {
@@ -124,13 +123,6 @@ namespace PeopleManager.API.Controllers
             {
                 await employeeService.UpdateAsync(vm.Employee);
                 return RedirectToAction(nameof(Index));
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!await EmployeeExists(vm.Employee.Id))
-                    return NotFound();
-
-                throw;
             }
             catch (Exception ex)
             {
