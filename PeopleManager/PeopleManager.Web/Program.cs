@@ -7,12 +7,13 @@ using PeopleManager.Core.Interfaces;
 using PeopleManager.Infrastructure;
 using PeopleManager.Infrastructure.Identity;
 using PeopleManager.Infrastructure.Persistence.Repositories;
+using System.Threading.Tasks;
 
 namespace PeopleManager.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public async static Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,18 @@ namespace PeopleManager.Web
             builder.Services.AddControllersWithViews();
 
             var app = builder.Build();
+
+            // seeding the application
+            using (var scope = app.Services.CreateScope())
+            {
+                var scopedProvider = scope.ServiceProvider;
+
+                var identityContext = scopedProvider.GetRequiredService<AppIdentityDbContext>();
+                var userManager = scopedProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                var roleManager = scopedProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+                await AppIdentityDbContextSeed.SeedAsync(identityContext, userManager, roleManager);
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
