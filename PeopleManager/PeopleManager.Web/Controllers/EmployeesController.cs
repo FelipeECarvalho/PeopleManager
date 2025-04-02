@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PeopleManager.Application.Services;
 using PeopleManager.Application.ViewModels;
 using System;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace PeopleManager.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class EmployeesController(IEmployeeService employeeService, IPersonService personService) : Controller
     {
         public async Task<IActionResult> Index()

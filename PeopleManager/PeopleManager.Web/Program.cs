@@ -65,10 +65,7 @@ namespace PeopleManager.Web
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapRazorPages();
-            });
+            app.MapRazorPages();
 
             app.Run();
         }
