@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -20,6 +20,7 @@ namespace PeopleManager.Web
             Dependencies.ConfigureServices(builder.Configuration, builder.Services);
 
             builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddDefaultUI()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
 
@@ -63,6 +64,8 @@ namespace PeopleManager.Web
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.MapRazorPages();
 
             app.Run();
         }
