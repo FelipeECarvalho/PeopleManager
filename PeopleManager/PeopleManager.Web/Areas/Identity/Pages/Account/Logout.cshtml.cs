@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PeopleManager.Infrastructure.Identity;
+using System.Threading.Tasks;
 
 namespace PeopleManager.Web.Areas.Identity.Pages.Account
 {
@@ -13,7 +13,7 @@ namespace PeopleManager.Web.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
-            
+
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

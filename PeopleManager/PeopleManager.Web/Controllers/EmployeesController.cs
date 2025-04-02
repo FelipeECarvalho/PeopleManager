@@ -190,10 +190,5 @@ namespace PeopleManager.Web.Controllers
 
             return Json(data);
         }
-
-        private async Task<bool> EmployeeExists(int id)
-        {
-            return await employeeService.ExistsAsync(id);
-        }
     }
 }

@@ -10,7 +10,7 @@ namespace PeopleManager.Infrastructure
     {
         public static void ConfigureServices(IConfiguration configuration, IServiceCollection services)
         {
-            services.AddDbContext<PeopleManagerContext>(c 
+            services.AddDbContext<PeopleManagerContext>(c
                 => c.UseSqlServer(configuration.GetConnectionString("PeopleManagerContext")));
 
             services.AddDbContext<AppIdentityDbContext>(options =>
